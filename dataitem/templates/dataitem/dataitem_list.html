@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dataitem Liste</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 30px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .item {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .item:last-child {
+            border-bottom: none;
+        }
+        .item h3 {
+            margin: 0 0 5px;
+        }
+        .add-button {
+            display: block;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .add-button a {
+            background-color: #0077cc;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .add-button a:hover {
+            background-color: #005fa3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="add-button">
+            <a href="{% url 'dataitem_create' %}">+ Neues Dataitem</a>
+        </div>
+        <h1>Alle Dataitems</h1>
+
+        {% if dataitems %}
+            {% for item in dataitems %}
+                <div class="item">
+                    <h3>{{ item.name }}</h3>
+                    <p>{{ item.description }}</p>
+                    {% if item.uploaded_file %}
+                        <p><a href="{{ item.uploaded_file.url }}">Datei herunterladen</a></p>
+                    {% endif %}
+                    <p><small>Erstellt am: {{ item.created_at|date:"d.m.Y H:i" }}</small></p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Es wurden noch keine Dataitems erstellt.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
