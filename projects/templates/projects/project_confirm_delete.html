@@ -1,7 +1,25 @@
-<h1>Delete Project</h1>
-<p>Are you sure you want to delete "{{ project.name }}"?</p>
-<form method="post">
-  {% csrf_token %}
-  <button type="submit">Yes, delete</button>
-</form>
-<a href="{% url 'projects:project_detail' project.pk %}">Cancel</a>
+{% extends "base.html" %}
+
+{% block title %}
+  Anoteer | Delete Project
+{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+      <div class="card border-danger shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-danger">Delete Project</h5>
+          <p>Are you sure you want to delete <strong>{{ project.name }}</strong>?</p>
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a href="{% url 'projects:project_detail' project.pk %}" class="btn btn-secondary ms-2">
+              Cancel
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

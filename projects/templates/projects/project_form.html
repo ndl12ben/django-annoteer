@@ -1,6 +1,62 @@
-<h1>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Project</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
-</form>
+{% extends "base.html" %}
+
+{% block title %}
+  Anoteer | {% if form.instance.pk %}Edit{% else %}Create{% endif %} Project
+{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">
+            {% if form.instance.pk %}
+              <i class="bi bi-pencil-square"></i>
+              Edit Project
+            {% else %}
+              <i class="bi bi-plus-lg"></i>
+              Create Project
+            {% endif %}
+          </h5>
+        </div>
+        <div class="card-body">
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <!-- Name field -->
+            <div class="mb-3">
+              {{ form.name.label_tag }}
+              {{ form.name }}
+              {% if form.name.errors %}
+                <div class="invalid-feedback d-block">
+                  {{ form.name.errors|striptags }}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Description field -->
+            <div class="mb-4">
+              {{ form.description.label_tag }}
+              {{ form.description }}
+              {% if form.description.errors %}
+                <div class="invalid-feedback d-block">
+                  {{ form.description.errors|striptags }}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-end">
+              <a href="{% url 'projects:project_list' %}" class="btn btn-secondary me-2">
+                Cancel
+              </a>
+              <button type="submit" class="btn btn-primary">
+                {% if form.instance.pk %}Save Changes{% else %}Create Project{% endif %}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
